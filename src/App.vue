@@ -1,9 +1,9 @@
 <template>
     <div id="app">
       <TodoHeader></TodoHeader>
-      <TodoInput v-on:addTodo="addTodo" Todo="addTodo" ></TodoInput>
-      <TodoList v-bind:propsdata="todoItems"></TodoList>
-      <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
+      <TodoInput @addTodo="addTodo"></TodoInput>
+      <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo"></TodoList>
+      <TodoFooter @removeAll="clearAll"></TodoFooter>
     </div>
 </template>
 
@@ -35,6 +35,10 @@ export default {
     clearAll() {
       localStorage.clear();
       this.todoItems = [];
+    },
+    removeTodo(todoItem, index) {
+      localStorage.removeItem(todoItem);
+      this.todoItems.splice(index, 1);
     }
   },
   components: {
@@ -50,6 +54,11 @@ export default {
   body {
     text-align: center;
     background-color: #f6f6f8
+  }
+  
+  input {
+    border-style: groove;
+    width: 200px;
   }
 
   button {
